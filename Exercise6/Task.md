@@ -1,0 +1,1 @@
+![hostnamectl](task.png)
