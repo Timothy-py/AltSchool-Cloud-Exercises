@@ -1,0 +1,4 @@
+Sytem memory logs at timestamp: 15:14:40/09-28-2022
+              total        used        free      shared  buff/cache   available
+Mem:        5959452     4207692      458592      362320     1293168     1135616
+Swap:      13020676     1002172    12018504
