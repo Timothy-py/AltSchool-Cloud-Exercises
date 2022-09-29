@@ -1,7 +1,13 @@
-#! /bin/bash
+#! /usr/bin/bash
 
-file_name="memory_logs.txt"
+FILE_PATH="/home/timothy/memory_logs.txt"
+
+if ! [ -f $FILE_PATH ]; then
+    touch $FILE_PATH
+    chmod ugo+xw $FILE_PATH
+fi
+
 d=$(date +%T/%m-%d-%Y)
-echo "Sytem memory logs at timestamp: $d" >>$file_name
+echo "Sytem memory logs at timestamp: $d" >>$FILE_PATH
 
-free >>$file_name
+free >>$FILE_PATH
