@@ -1,13 +1,15 @@
 #! /usr/bin/bash
 
-FILE_PATH="/home/timothy/memory_logs.txt"
+FILE_PATH="/home/vagrant/memory_logs.txt"
+DATE=$(date +%T,%d-%m-%Y)
 
+#create file if it doesn't exist
 if ! [ -f $FILE_PATH ]; then
     touch $FILE_PATH
     chmod ugo+xw $FILE_PATH
 fi
 
-d=$(date +%T/%m-%d-%Y)
-echo "Sytem memory logs at timestamp: $d" >>$FILE_PATH
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" >>$FILE_PATH
+echo "System memory logs at timestamp: $DATE" >>$FILE_PATH
 
-free >>$FILE_PATH
+free -h >>$FILE_PATH

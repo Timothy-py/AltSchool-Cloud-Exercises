@@ -1,4 +1,40 @@
-Sytem memory logs at timestamp: 15:14:40/09-28-2022
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 15:00:01,09-10-2022
               total        used        free      shared  buff/cache   available
-Mem:        5959452     4207692      458592      362320     1293168     1135616
-Swap:      13020676     1002172    12018504
+Mem:          976Mi       145Mi       410Mi       0.0Ki       420Mi       681Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 16:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       144Mi       402Mi       0.0Ki       430Mi       682Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 19:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       150Mi       487Mi       0.0Ki       338Mi       677Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 20:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       154Mi       474Mi       0.0Ki       347Mi       680Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 21:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       148Mi       476Mi       0.0Ki       351Mi       686Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 22:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       148Mi       413Mi       0.0Ki       413Mi       685Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 23:00:01,09-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       144Mi       490Mi       0.0Ki       341Mi       684Mi
+Swap:            0B          0B          0B
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+System memory logs at timestamp: 00:00:01,10-10-2022
+              total        used        free      shared  buff/cache   available
+Mem:          976Mi       147Mi       469Mi       0.0Ki       360Mi       681Mi
+Swap:            0B          0B          0B
