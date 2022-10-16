@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: install apache and php packages
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+      when: ansible_distribution == "Ubuntu"
