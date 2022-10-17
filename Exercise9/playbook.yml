@@ -10,3 +10,16 @@
           - libapache2-mod-php
         state: latest
       when: ansible_distribution == "Ubuntu"
+
+    - name: set system timezone
+      copy:
+          content: "Africa/Lagos\n"
+          dest: /etc/timezone
+          owner: root
+          group: root
+          mode: 0644
+      register: timezone
+
+    - name: reconfigure the system after setting timezone
+      shell: dpkg-reconfigure --frontend noninteractive tzdata
+      when: timezone.changed
