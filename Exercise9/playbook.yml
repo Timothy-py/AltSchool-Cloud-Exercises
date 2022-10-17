@@ -23,3 +23,11 @@
     - name: reconfigure the system after setting timezone
       shell: dpkg-reconfigure --frontend noninteractive tzdata
       when: timezone.changed
+
+    - name: copy default page for server
+      copy:
+          src: default_page.php
+          dest: /var/www/html/index.php
+          owner: root
+          group: root
+          mode: 0644
