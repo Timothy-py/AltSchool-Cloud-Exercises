@@ -9,3 +9,11 @@
                     upgrade: dist
                     force_apt_get: yes
                     update_cache: yes
+
+          - name: install apache and php packages for ubuntu server
+            tags: ubuntu,apache,php
+            apt:
+                    name:
+                            - apache2
+                            - libapache2-mod-php
+                    state: latest
