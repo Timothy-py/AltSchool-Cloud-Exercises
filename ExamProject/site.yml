@@ -17,3 +17,9 @@
                             - apache2
                             - libapache2-mod-php
                     state: latest
+
+          - name: Set up firewall
+            tags: ufw,firewall
+            community.general.ufw:
+                    rule: allow
+                    name: OpenSSH
