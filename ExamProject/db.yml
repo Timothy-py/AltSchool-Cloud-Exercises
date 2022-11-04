@@ -10,23 +10,19 @@
                             - postgresql
                             - postgresql-contrib
                     state: present
+
+          - name: Install Pip3
+            apt:
+                    name:
+                            - python3-pip
           
           - name: Install Python package for postgres
             tags: python,database
-            pip:
+            ansible.builtin.pip:
                     name:
                             - psycopg2-binary
 
   tasks:
-          - name: Find out if PostgreSQL is initialized
-            ansible.builtin.stat:
-                    path: "/var/lib/pgsql/data/pg_hba.conf"
-                    register: postgres_data
-
-          - name: Initialize PostgreSQL
-            shell: "postgresql-setup initdb"
-            when: not postgres_data.stat.exists
-
           - name: Start and enable postgres service
             service:
                     name: postgresql
