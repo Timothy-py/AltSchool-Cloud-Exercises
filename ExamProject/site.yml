@@ -52,3 +52,12 @@
                     - php8.1-curl 
                     - php8.1-xml
                     - php8.1-bcmath
+
+
+          - name: create project directory
+            file:
+                    path: /var/www/timothy
+                    state: directory
+                    owner: www-data
+                    group: www-data
+                    mode: '0700'
