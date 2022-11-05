@@ -84,3 +84,11 @@
           - name: Disable default Apache Configuration
             shell:
                     cmd: sudo a2dissite 000-default
+
+          - name: Copy site configuration file
+            copy:
+                    src: timothy.conf
+                    dest: /etc/apache2/sites-available/timothy.conf
+                    owner: root
+                    group: root
+                    mode: 0644
