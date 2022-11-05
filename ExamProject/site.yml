@@ -52,15 +52,6 @@
                     - php8.1-curl 
                     - php8.1-xml
                     - php8.1-bcmath
-
-
-          - name: create project directory
-            file:
-                    path: /var/www/timothy
-                    state: directory
-                    #owner: www-data
-                    #group: www-data
-                    #omode: '0700'
                      
           - name: Clone git repository
             git:
@@ -78,3 +69,15 @@
                     - php composer-setup.php
                     - php -r "unlink('composer-setup.php');"
                     - sudo mv composer.phar /usr/local/bin/composer
+
+          - name: Set directory permissions for Apache
+            shell:
+                    cmd: "{{item}}"
+            args:
+                    chdir: /var/www/
+            with_items:
+                    - sudo chmod -R 755 timothy
+                    - sudo chown -R www-data:www-data timothy
+                    - sudo chgrp -R www-data timothy/storage timothy/bootstrap/cache
+                    - sudo chmod -R ug+rwx timothy/storage timothy/bootstrap/cache
+
