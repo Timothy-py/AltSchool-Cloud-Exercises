@@ -81,3 +81,6 @@
                     - sudo chgrp -R www-data timothy/storage timothy/bootstrap/cache
                     - sudo chmod -R ug+rwx timothy/storage timothy/bootstrap/cache
 
+          - name: Disable default Apache Configuration
+            shell:
+                    cmd: sudo a2dissite 000-default
