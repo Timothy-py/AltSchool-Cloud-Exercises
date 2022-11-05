@@ -58,6 +58,13 @@
             file:
                     path: /var/www/timothy
                     state: directory
-                    owner: www-data
-                    group: www-data
-                    mode: '0700'
+                    #owner: www-data
+                    #group: www-data
+                    #omode: '0700'
+                     
+          - name: Clone git repository
+            git:
+                    repo: https://github.com/f1amy/laravel-realworld-example-app.git
+                    dest: /var/www/timothy
+                    clone: yes
+                    update: no
