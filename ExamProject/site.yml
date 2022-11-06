@@ -92,3 +92,11 @@
                     owner: root
                     group: root
                     mode: 0644
+
+          - name: Copy environment variable file
+            copy:
+                    src: .env
+                    dest: /var/www/timothy/.env
+                    owner: root
+                    group: root
+                    mode: 0755
