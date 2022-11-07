@@ -41,7 +41,7 @@
           - name: Allow md5 connect for the db user
             postgresql_pg_hba:
                     dest: "/etc/postgresql/14/main/pg_hba.conf"
-                    contype: host
+                    contype: local
                     databases: all
                     method: md5
                     users: postgres
@@ -50,13 +50,20 @@
                     #become_user: postgres
             notify: restart postgres
 
-                    #- name: Create app database
-                    #postgresql_db:
-                    #state: present
-                    #name: "exam-project-db"
-                    #become: yes
-                    #become_user: postgres
-  
+          - name: Create app database
+            postgresql_db:
+                    name: exam-project-db
+                    state: present
+
+          - name: Migrate Database
+            shell:
+                    cmd: "{{item}}"
+            args:
+                    chdir: /var/www/timothy/
+            with_items:
+                    - sudo -u www-data composer create-project
+                    - sudo -u www-data php artisan migrate --seed
+
   handlers:
           - name: restart postgres
             service:
