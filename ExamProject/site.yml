@@ -76,8 +76,10 @@
             args:
                     chdir: /var/www/
             with_items:
+                    - sudo chown root:root /var/www
                     - sudo chmod -R 755 timothy
                     - sudo chown -R www-data:www-data timothy
+                    - sudo chmod -R 774 timothy
                     - sudo chgrp -R www-data timothy/storage timothy/bootstrap/cache
                     - sudo chmod -R ug+rwx timothy/storage timothy/bootstrap/cache
 
@@ -97,8 +99,8 @@
             copy:
                     src: .env
                     dest: /var/www/timothy/.env
-                    owner: root
-                    group: root
+                    owner: www-data
+                    group: www-data
                     mode: 0755
 
           - name: Other commands
