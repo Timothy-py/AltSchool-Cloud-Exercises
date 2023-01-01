@@ -10,3 +10,35 @@
                     force_apt_get: yes
                     update_cache: yes
 
+          - name: Install ufw
+            tags: ufw
+            apt:
+                    name: ufw
+                    state: present
+
+          - name: Allow HTTPS access
+            tags: ufw
+            ufw:
+                    rule: allow
+                    port: 443
+                    proto: tcp
+
+          - name: Allow HTTP accesss
+            tags: ufw
+            ufw:
+                    rule: allow
+                    port: 80
+                    proto: tcp
+
+          - name: Allow SSH access
+            tags: ufw
+            ufw:
+                    rule: allow
+                    port: 22
+                    proto: tcp
+
+          - name: Enable ufw
+            ufw:
+                    state: enabled
+                    direction: in
+
