@@ -56,6 +56,6 @@
           - name: Create home page
             copy:
                     src: files/index.html
-                    dest: /user/share/nginx/html/index.html
+                    dest: /usr/share/nginx/html/index.html
                     mode: 0644
 
