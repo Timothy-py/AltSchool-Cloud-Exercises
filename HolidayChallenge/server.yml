@@ -56,7 +56,7 @@
           - name: Create home page
             copy:
                     src: files/index.html
-                    dest: /var/www/index.html
+                    dest: /var/www/html/index.nginx-debian.html
                     owner: www-data
                     group: www-data
                     mode: 0644
