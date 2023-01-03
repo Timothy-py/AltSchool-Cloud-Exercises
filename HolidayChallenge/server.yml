@@ -38,25 +38,53 @@
                     proto: tcp
 
           - name: Enable ufw
+            tags: ufw
             ufw:
                     state: enabled
                     direction: in
 
           - name: Install NGINX
+            tags: nginx
             apt:
                     name: nginx
                     state: present
 
           - name: Start NGINX service
+            tags: nginx
             service:
                     name: nginx
                     state: started
                     enabled: yes
+
+          - name: Edit NGINX config file
+            tags: nginx
+            blockinfile:
+                    path: /etc/nginx/sites-enabled/default
+                    block: |
+                            server {
+                                    listen 80 default_server;
+                                    listent [::]:80 default_server;
+
+                                    root /var/www/html;
+                                    index index.html inde.htm;
+
+                                    server_name _;
+
+                                    location / {
+                                            try_files $uri $uri/ =404;
+                                    }
+                            }
+
+          - name: Restart NGINX service
+            tags: nginx
+            service:
+                    name: nginx
+                    state: restarted
           
           - name: Create home page
             copy:
                     src: files/index.html
-                    dest: /var/www/html/index.nginx-debian.html
+                    dest: /var/www/html/index.html
                     owner: www-data
                     group: www-data
                     mode: 0644
