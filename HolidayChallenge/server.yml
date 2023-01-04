@@ -49,24 +49,17 @@
                     name: nginx
                     state: present
 
-          - name: Start NGINX service
-            tags: nginx
-            service:
-                    name: nginx
-                    state: started
-                    enabled: yes
-
           - name: Edit NGINX config file
             tags: nginx
             blockinfile:
                     path: /etc/nginx/sites-enabled/default
                     block: |
                             server {
-                                    listen 80 default_server;
-                                    listent [::]:80 default_server;
+                                    listen 85 default_server;
+                                    listen [::]:85 default_server;
 
                                     root /var/www/html;
-                                    index index.html inde.htm;
+                                    index index.html index.htm;
 
                                     server_name _;
 
@@ -75,12 +68,13 @@
                                     }
                             }
 
-          - name: Restart NGINX service
+          - name: Start NGINX service
             tags: nginx
             service:
                     name: nginx
-                    state: restarted
-          
+                    state: started
+                    enabled: yes
+         
           - name: Create home page
             copy:
                     src: files/index.html
