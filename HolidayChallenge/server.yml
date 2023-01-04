@@ -74,10 +74,14 @@
                     name: nginx
                     state: started
                     enabled: yes
+
+          - name: Get host info
+            shell: hostnamectl | grep "Static"
+            register: host_info
          
-          - name: Create home page
-            copy:
-                    src: files/index.html
+          - name: Render home page
+            template:
+                    src: files/index.html.j2
                     dest: /var/www/html/index.html
                     owner: www-data
                     group: www-data
