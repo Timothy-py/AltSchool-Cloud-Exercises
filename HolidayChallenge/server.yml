@@ -49,7 +49,7 @@
                     name: nginx
                     state: present
 
-          - name: Edit NGINX config file
+          - name: Edit NGINX config file for default homepage
             tags: nginx
             blockinfile:
                     path: /etc/nginx/sites-enabled/default
@@ -86,4 +86,12 @@
                     owner: www-data
                     group: www-data
                     mode: 0644
+
+          - name: Block access through public IP
+            lineinfile:
+                    path: /etc/nginx/sites-available/default
+                    regexp: '^(\s*deny\s+).*'
+                    line: '\1$remote_addr;'
+                    backrefs: yes
+                    state: present
 
