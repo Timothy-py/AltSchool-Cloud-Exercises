@@ -97,6 +97,25 @@
             notify:
                     - restart nginx
 
+          - name: allow access through ALB
+            lineinfile:
+                    path: /etc/nginx/sites-available/default
+                    regexp: '(\s*allow\s+).*'
+                    line: '\1$http_x_forwarded_for;'
+                    backrefs: yes
+                    state: present
+            notify:
+                    - restart nginx
+
+          - name: remove default server block
+            lineinfile:
+                    path: /etc/nginx/nginx.conf
+                    regexp: '^(\s*include\s+/etc/nginx/sites-enabled/\*;)'
+                    state: absent
+            notify:
+                    - restart nginx
+
+
   handlers:
           - name: restart nginx
             service:
