@@ -94,4 +94,11 @@
                     line: '\1$remote_addr;'
                     backrefs: yes
                     state: present
+            notify:
+                    - restart nginx
 
+  handlers:
+          - name: restart nginx
+            service:
+                    name: nginx
+                    state: restarted
