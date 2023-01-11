@@ -15,3 +15,15 @@
 ### Register Targets
 
 ![hostnamectl](images/register-Targets.png)
+
+### ALB Summary
+
+![hostnamectl](images/ALB-summary.png)
+
+### Target Group Created
+
+![hostnamectl](images/TargetGroup-created.png)
+
+### ALB Created
+
+![hostnamectl](images/ALB-created.png)
