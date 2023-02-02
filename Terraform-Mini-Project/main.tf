@@ -51,3 +51,26 @@ resource "aws_route_table_association" "altschool" {
   subnet_id      = aws_subnet.altschool.id
   route_table_id = aws_route_table.altschool.id
 }
+
+# CREATE SECURITY GROUP
+resource "aws_security_group" "altschool" {
+  name        = "altschool_sg"
+  description = "Altschool Terraform mini project security group"
+  vpc_id      = aws_vpc.altschool.id
+
+  ingress {
+    description = "Allow all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
