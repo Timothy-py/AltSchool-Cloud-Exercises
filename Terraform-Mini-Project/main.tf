@@ -9,17 +9,20 @@ resource "aws_vpc" "altschool" {
   }
 }
 
-# CREATE A SUBNET RESOURCE
+# USE DATA SOURCE TO GET ALL AVAILABILIT ZONES IN A REGION
+data "aws_availability_zones" "AZ" {}
+
+# CREATE A PUBLIC SUBNET RESOURCE
 resource "aws_subnet" "altschool" {
-  count = 3
+  count = length(data.aws_availability_zones.AZ.names)
 
   vpc_id                  = aws_vpc.altschool.id
   cidr_block              = "10.0.${count.index + 1}.0/24"
   map_public_ip_on_launch = true
-  # availability_zone       = "us-west-1${count.index + 1}"
+  availability_zone       = data.aws_availability_zones.AZ.names[count.index]
 
   tags = {
-    Name = "altschool-public-${count.index + 1}"
+    Name = "altschool-public"
   }
 }
 
@@ -50,7 +53,7 @@ resource "aws_route" "altschool" {
 
 # CREATE ROUTE TABLE ASSOCIATION TO SUBNET
 resource "aws_route_table_association" "altschool" {
-  count = 3
+  count          = 3
   subnet_id      = aws_subnet.altschool[count.index].id
   route_table_id = aws_route_table.altschool.id
 }
@@ -92,7 +95,7 @@ resource "aws_instance" "altschool" {
   ami                    = data.aws_ami.server_ami.id
   key_name               = aws_key_pair.altschool.id
   vpc_security_group_ids = [aws_security_group.altschool.id]
-  subnet_id      = aws_subnet.altschool[count.index].id
+  subnet_id              = aws_subnet.altschool[count.index].id
   # user_data = file("userdata.tpl")
 
 
@@ -130,18 +133,6 @@ resource "aws_lb_target_group" "altschool" {
   port     = 8080
   protocol = "HTTP"
   vpc_id   = aws_vpc.altschool.id
-
-  # target {
-  #   id = aws_instance.altschool.*.id[1]
-  # }
-
-  # target {
-  #   id = aws_instance.altschool.*.id[2]
-  # }
-
-  # target {
-  #   id = aws_instance.altschool.*.id[3]
-  # }
 }
 
 # OUTPUT PUBLIC IP to file
