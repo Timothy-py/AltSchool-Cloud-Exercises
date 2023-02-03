@@ -11,13 +11,15 @@ resource "aws_vpc" "altschool" {
 
 # CREATE A SUBNET RESOURCE
 resource "aws_subnet" "altschool" {
+  count = 3
+
   vpc_id                  = aws_vpc.altschool.id
-  cidr_block              = "10.0.1.0/24"
+  cidr_block              = "10.0.${count.index + 1}.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "us-west-1b"
+  # availability_zone       = "us-west-1${count.index + 1}"
 
   tags = {
-    Name = "altschool-public"
+    Name = "altschool-public-${count.index + 1}"
   }
 }
 
@@ -48,7 +50,8 @@ resource "aws_route" "altschool" {
 
 # CREATE ROUTE TABLE ASSOCIATION TO SUBNET
 resource "aws_route_table_association" "altschool" {
-  subnet_id      = aws_subnet.altschool.id
+  count = 3
+  subnet_id      = aws_subnet.altschool[count.index].id
   route_table_id = aws_route_table.altschool.id
 }
 
@@ -79,4 +82,88 @@ resource "aws_security_group" "altschool" {
 resource "aws_key_pair" "altschool" {
   key_name   = "altschool"
   public_key = file("~/.ssh/main_terraform.pub")
+}
+
+# CREATE 3 EC2 INSTANCES
+resource "aws_instance" "altschool" {
+  count = 3
+
+  instance_type          = "t2.micro"
+  ami                    = data.aws_ami.server_ami.id
+  key_name               = aws_key_pair.altschool.id
+  vpc_security_group_ids = [aws_security_group.altschool.id]
+  subnet_id      = aws_subnet.altschool[count.index].id
+  # user_data = file("userdata.tpl")
+
+
+  tags = {
+    Name = "instance-${count.index + 1}"
+  }
+}
+
+
+# CREATE ELASTIC LOAD BALANCER
+resource "aws_lb" "altschool" {
+  name               = "altschool-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.altschool.id]
+  subnets            = aws_subnet.altschool.*.id
+}
+
+# ADD ALB LISTENER
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_lb.altschool.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.altschool.arn
+  }
+}
+
+
+# CREATE TARGET GROUP FOR LOAD BALANCER
+resource "aws_lb_target_group" "altschool" {
+  name     = "altschool-tg"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.altschool.id
+
+  # target {
+  #   id = aws_instance.altschool.*.id[1]
+  # }
+
+  # target {
+  #   id = aws_instance.altschool.*.id[2]
+  # }
+
+  # target {
+  #   id = aws_instance.altschool.*.id[3]
+  # }
+}
+
+# OUTPUT PUBLIC IP to file
+output "host-inventory" {
+  value       = aws_instance.altschool.*.public_ip
+  description = "The public IP addresses of the EC2 instances."
+}
+
+# ROUTE53
+resource "aws_route53_zone" "altschool" {
+  name = "timothyadeyeye.com.ng."
+}
+
+# ROUTE53
+resource "aws_route53_record" "altschool" {
+  zone_id = aws_route53_zone.altschool.zone_id
+  name    = "terraform-test.timothyadeyeye.com.ng"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.altschool.dns_name
+    zone_id                = aws_lb.altschool.zone_id
+    evaluate_target_health = true
+  }
 }
