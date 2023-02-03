@@ -74,3 +74,9 @@ resource "aws_security_group" "altschool" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# CREATE EC2 KEY PAIR
+resource "aws_key_pair" "altschool" {
+  key_name   = "altschool"
+  public_key = file("~/.ssh/main_terraform.pub")
+}
