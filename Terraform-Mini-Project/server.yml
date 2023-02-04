@@ -26,6 +26,25 @@
                 mode: 0644
             register: timezone
 
-           - name: reconfigure the system after setting timezone
-             shell: dpkg-reconfigure --frontend noninteractive tzdata
-             when: timezone.changed
+          - name: reconfigure the system after setting timezone
+            shell: dpkg-reconfigure --frontend noninteractive tzdata
+            when: timezone.changed
+
+          - name: Get host info
+            shell: hostnamectl | grep "Static"
+            register: host_info
+
+          - name: Render custom home page
+            template:
+                    src: files/index.html.j2
+                    dest: /var/www/html/index.html
+                    owner: www-data
+                    group: www-data
+                    mode: 0644
+
+          - name: Restart Apache
+            become: yes
+            service:
+                   name: apache2
+                   state: restarted
+
