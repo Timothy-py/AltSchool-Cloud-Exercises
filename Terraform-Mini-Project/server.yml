@@ -9,3 +9,10 @@
                     upgrade: dist
                     force_apt_get: yes
                     update_cache: yes
+
+          - name: install apache for ubuntu server
+            tags: apache
+            apt:
+                    name:
+                            - apache2
+                    state: latest
