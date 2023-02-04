@@ -1,0 +1,11 @@
+---
+- name: AltSchool Africa Terraform Mini Project
+  hosts: Servers
+  become: true
+  tasks:
+          - name: install updates on ubuntu server
+            tags: update
+            apt:
+                    upgrade: dist
+                    force_apt_get: yes
+                    update_cache: yes
