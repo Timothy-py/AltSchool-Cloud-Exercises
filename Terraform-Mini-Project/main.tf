@@ -96,7 +96,7 @@ resource "aws_instance" "altschool" {
   key_name               = aws_key_pair.altschool.id
   vpc_security_group_ids = [aws_security_group.altschool.id]
   subnet_id              = aws_subnet.altschool[count.index].id
-  # user_data = file("userdata.tpl")
+  # user_data              = file("userdata.tpl")
 
 
   tags = {
