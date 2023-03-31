@@ -1,3 +1,7 @@
+## Project
+
+![hostnamectl](images/terraform-mini-project.png)
+
 ## **Screenshots**
 
 ### Terraform Apply Result
